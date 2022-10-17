@@ -7,7 +7,7 @@ import { client as WebSocketClient } from "websocket";
 import type { SlippiBroadcastPayloadEvent, StartBroadcastConfig } from "./types";
 import { BroadcastEvent } from "./types";
 
-const SLIPPI_WS_SERVER = process.env.SLIPPI_WS_SERVER;
+const LYLAT_WS_SERVER = process.env.LYLAT_WS_SERVER;
 
 // This variable defines the number of events saved in the case of a disconnect. 1800 should
 // support disconnects of 30 seconds at most
@@ -111,7 +111,7 @@ export class BroadcastManager extends EventEmitter {
       authorization: `Bearer ${config.authToken}`,
     };
 
-    if (!SLIPPI_WS_SERVER) {
+    if (!LYLAT_WS_SERVER) {
       throw new Error("Slippi websocket server is undefined");
     }
 
@@ -308,7 +308,7 @@ export class BroadcastManager extends EventEmitter {
     });
 
     this.emit(BroadcastEvent.LOG, "Connecting to WS service");
-    socket.connect(SLIPPI_WS_SERVER, "broadcast-protocol", undefined, headers);
+    socket.connect(LYLAT_WS_SERVER, "broadcast-protocol", undefined, headers);
   }
 
   public stop() {

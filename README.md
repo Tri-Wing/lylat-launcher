@@ -1,9 +1,9 @@
-# ![Launcher icon](assets/icons/48x48.png) Slippi Launcher
+# ![Launcher icon](assets/icons/48x48.png) Lylat Launcher
 
-[![Build Status](https://github.com/project-slippi/slippi-launcher/workflows/build/badge.svg)](https://github.com/project-slippi/slippi-launcher/actions?workflow=build)
-[![License](https://img.shields.io/badge/license-GPLv3-blue)](https://github.com/project-slippi/slippi-launcher/blob/master/LICENSE)
+[![Build Status](https://github.com/Tri-Wing/lylat-launcher/workflows/build/badge.svg)](https://github.com/Tri-Wing/lylat-launcher/actions?workflow=build)
+[![License](https://img.shields.io/badge/license-GPLv3-blue)](https://github.com/Tri-Wing/lylat-launcher/blob/master/LICENSE)
 
-The Slippi Launcher acts as a one stop shop for everything Slippi related. It handles updating Slippi Dolphin, playing Slippi Online, launching and analyzing replays, and more.
+The Lylat Launcher acts as a one stop shop for everything Slippi related. It handles updating Slippi Dolphin, playing Slippi Online, launching and analyzing replays, and more.
 
 This repository is part of the Project Slippi ecosystem. For more information about all of the Project Slippi projects, visit https://github.com/project-slippi/project-slippi.
 
@@ -19,7 +19,7 @@ These are the applications you will need to install in order to build this proje
 
 ### Build Steps
 
-- Clone the repo via: `git clone https://github.com/project-slippi/slippi-launcher.git`
+- Clone the repo via: `git clone https://github.com/Tri-Wing/lylat-launcher.git`
 - Navigate into the directory and run: `yarn install` to install all dependencies
 - Use `yarn run start` to run the app in develop mode
 - Use `yarn run package` to build a release
@@ -60,7 +60,7 @@ These extensions will provide automatic formatting and warnings about code quali
 
 ## Contributing
 
-Contributions are welcome! The [issues section](https://github.com/project-slippi/slippi-launcher/issues) contains some good first ideas. When making a PR, ensure you are not PRing your `main` branch and always describe the feature and what testing you've done so far.
+Contributions are welcome! The [issues section](https://github.com/Tri-Wing/lylat-launcher/issues) contains some good first ideas. When making a PR, ensure you are not PRing your `main` branch and always describe the feature and what testing you've done so far.
 
 ## Acknowledgements
 
@@ -68,4 +68,4 @@ This application uses [Electron React Boilerplate](https://github.com/electron-r
 
 ## License
 
-Slippi Launcher is released as open source software under the [GPL v3](https://opensource.org/licenses/gpl-3.0.html) license. See the [LICENSE](./LICENSE) file in the project root for the full license text.
+Lylat Launcher is released as open source software under the [GPL v3](https://opensource.org/licenses/gpl-3.0.html) license. See the [LICENSE](./LICENSE) file in the project root for the full license text.

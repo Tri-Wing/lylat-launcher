@@ -98,9 +98,9 @@ export default function setupMainIpc() {
     let logsFolder = isMac ? app.getPath("logs") : path.resolve(app.getPath("userData"), "logs");
     if (isDevelopment) {
       if (isMac) {
-        logsFolder = path.join(logsFolder, "..", "Slippi Launcher");
+        logsFolder = path.join(logsFolder, "..", "Lylat Launcher");
       } else {
-        logsFolder = path.join(logsFolder, "../../", "Slippi Launcher", "logs");
+        logsFolder = path.join(logsFolder, "../../", "Lylat Launcher", "logs");
       }
     }
 

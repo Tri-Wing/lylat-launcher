@@ -1,6 +1,6 @@
 {
-  "productName": "Slippi Launcher",
-  "appId": "com.github.projectslippi.slippidesktopapp",
+  "productName": "Lylat Launcher",
+  "appId": "com.github.projectlylat.lylatdesktopapp",
   "asar": true,
   "asarUnpack": [
     "**\\*.{node,dll}",
@@ -15,7 +15,7 @@
     "description": "Slippi File Format",
     "icon": "./assets/file.ico"
   },
-  "artifactName": "Slippi-Launcher-${version}-${os}.${ext}",
+  "artifactName": "Lylat-Launcher-${version}-${os}.${ext}",
   "mac": {
     "target": {
       "target": "default",
@@ -40,7 +40,7 @@
     "minimumSystemVersion": "10.13.6"
   },
   "dmg": {
-    "artifactName": "Slippi-Launcher-${version}.${ext}",
+    "artifactName": "Lylat-Launcher-${version}.${ext}",
     "icon": "assets/icon.icns",
     "contents": [
       {
@@ -60,7 +60,7 @@
     "icon": "assets/icon.ico"
   },
   "nsis": {
-    "artifactName": "Slippi-Launcher-Setup-${version}.${ext}",
+    "artifactName": "Lylat-Launcher-Setup-${version}.${ext}",
     "include": ".erb/scripts/installer.nsh",
     "warningsAsErrors": false,
     "allowElevation": true,
@@ -72,13 +72,13 @@
     "category": "Development"
   },
   "appImage": {
-    "artifactName": "Slippi-Launcher-${version}-x86_64.${ext}"
+    "artifactName": "Lylat-Launcher-${version}-x86_64.${ext}"
   },
   "protocols": [
     {
-      "name": "slippi",
+      "name": "lylat",
       "role": "Viewer",
-      "schemes": ["slippi"]
+      "schemes": ["lylat"]
     }
   ],
   "directories": {
@@ -89,7 +89,7 @@
   "extraResources": ["./assets/include/**"],
   "publish": {
     "provider": "github",
-    "owner": "project-slippi",
-    "repo": "slippi-launcher"
+    "owner": "Tri-Wing",
+    "repo": "lylat-launcher"
   }
 }

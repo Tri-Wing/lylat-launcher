@@ -16,7 +16,7 @@ import {
 import type { SlippiBackendService } from "./types";
 
 const log = window.electron.log;
-const SLIPPI_BACKEND_URL = process.env.SLIPPI_GRAPHQL_ENDPOINT;
+const SLIPPI_BACKEND_URL = process.env.LYLAT_GRAPHQL_ENDPOINT;
 
 const handleErrors = (errors: readonly GraphQLError[] | undefined) => {
   if (errors) {
@@ -77,7 +77,7 @@ class SlippiBackendClient implements SlippiBackendService {
     return new ApolloClient({
       link: apolloLink,
       cache: new InMemoryCache(),
-      name: "slippi-launcher",
+      name: "lylat-launcher",
       version: clientVersion,
     });
   }

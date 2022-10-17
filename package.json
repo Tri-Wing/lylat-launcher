@@ -1,6 +1,6 @@
 {
-  "name": "slippi-launcher",
-  "productName": "Slippi Launcher",
+  "name": "lylat-launcher",
+  "productName": "Lylat Launcher",
   "description": "Launch Slippi Online, browse and watch saved replays",
   "license": "GPL-3.0",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/project-slippi/slippi-launcher.git"
+    "url": "git+https://github.com/Tri-Wing/lylat-launcher.git"
   },
   "author": {
     "name": "Jas Laferriere",

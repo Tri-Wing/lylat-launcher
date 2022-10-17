@@ -119,7 +119,7 @@ export default function setupDolphinIpc({ dolphinManager }: { dolphinManager: Do
 
   ipc_checkDesktopAppDolphin.main!.handle(async () => {
     // get the path and check existence
-    const desktopAppPath = path.join(app.getPath("appData"), "Slippi Desktop App");
+    const desktopAppPath = path.join(app.getPath("appData"), "Lylat Desktop App");
     let exists = await fs.pathExists(desktopAppPath);
 
     if (!exists) {

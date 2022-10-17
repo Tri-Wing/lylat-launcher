@@ -8,7 +8,7 @@ import { client as WebSocketClient } from "websocket";
 import type { BroadcasterItem } from "./types";
 import { SpectateEvent } from "./types";
 
-const SLIPPI_WS_SERVER = process.env.SLIPPI_WS_SERVER;
+const LYLAT_WS_SERVER = process.env.LYLAT_WS_SERVER;
 
 const DOLPHIN_INSTANCE_ID = "spectate";
 
@@ -178,9 +178,9 @@ export class SpectateManager extends EventEmitter {
 
         resolve();
       });
-      if (SLIPPI_WS_SERVER) {
+      if (LYLAT_WS_SERVER) {
         this.emit(SpectateEvent.LOG, "Connecting to spectate server");
-        socket.connect(SLIPPI_WS_SERVER, "spectate-protocol", undefined, headers);
+        socket.connect(LYLAT_WS_SERVER, "spectate-protocol", undefined, headers);
       }
     });
   }

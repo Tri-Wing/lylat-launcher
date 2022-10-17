@@ -20,7 +20,7 @@ export type DolphinVersionResponse = {
 const log = electronLog.scope("dolphin/checkVersion");
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-const httpLink = new HttpLink({ uri: process.env.SLIPPI_GRAPHQL_ENDPOINT, fetch });
+const httpLink = new HttpLink({ uri: process.env.LYLAT_GRAPHQL_ENDPOINT, fetch });
 const retryLink = new RetryLink({
   delay: {
     initial: 300,
@@ -48,7 +48,7 @@ const apolloLink = ApolloLink.from([errorLink, retryLink, httpLink]);
 const client = new ApolloClient({
   link: apolloLink,
   cache: new InMemoryCache(),
-  name: "slippi-launcher",
+  name: "lylat-launcher",
   version: `${appVersion}${isDevelopment ? "-dev" : ""}`,
 });
 

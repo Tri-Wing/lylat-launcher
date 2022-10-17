@@ -17,7 +17,7 @@ export const AdvancedAppSettings = React.memo(() => {
           value={autoUpdateLauncher}
           onChange={(checked) => setAutoUpdateLauncher(checked)}
           label="Enable Auto Updates"
-          description="Automatically install Slippi Launcher updates when they become available."
+          description="Automatically install Lylat Launcher updates when they become available."
         />
       </SettingItem>
       <ClearTempFilesForm />

@@ -49,7 +49,7 @@ export class DolphinInstallation {
         return path.join(dolphinPath, "Sys");
       }
       case "darwin": {
-        return path.join(dolphinPath, "Slippi Dolphin.app", "Contents", "Resources", "Sys");
+        return path.join(dolphinPath, "Lylat Dolphin.app", "Contents", "Resources", "Sys");
       }
       case "linux": {
         return path.join(app.getPath("userData"), type, "Sys");
@@ -178,6 +178,7 @@ export class DolphinInstallation {
   private async _isOutOfDate(latestVersion: string): Promise<boolean> {
     const dolphinPath = await this.findDolphinExecutable();
     const dolphinVersionOut = spawnSync(dolphinPath, ["--version"]).stdout.toString();
+    log.info(`Found local Lylat Netplay Dolphin version ${dolphinVersionOut}`);
     const match = dolphinVersionOut.match(semverRegex);
     const dolphinVersion = match?.[0] ?? "";
     return lt(dolphinVersion, latestVersion);

@@ -25,7 +25,7 @@ var InstallType
     !insertmacro MUI_HEADER_TEXT "Select components to install" ""
     nsDialogs::Create /NOUNLOAD 1018
     Pop $0
-    ${NSD_CreateRadioButton} 0 50u 100% 10u "Only install Slippi Launcher"
+    ${NSD_CreateRadioButton} 0 50u 100% 10u "Only install Lylat Launcher"
     pop $1
     ${NSD_CreateRadioButton} 0 70u 100% 10u "Also install GameCube adapter drivers (optional)"
     pop $2
@@ -57,24 +57,24 @@ var InstallType
 !macroend
 
 !macro customInstall
-  ; Add slippi URI Handling
-  DetailPrint "Register slippi URI Handler"
+  ; Add lylat URI Handling
+  DetailPrint "Register lylat URI Handler"
   ${If} $installMode == "all"
-    DeleteRegKey HKCR "slippi"
-    WriteRegStr HKCR "slippi" "" "URL:slippi"
-    WriteRegStr HKCR "slippi" "URL Protocol" ""
-    WriteRegStr HKCR "slippi\DefaultIcon" "" "$INSTDIR\${APP_EXECUTABLE_FILENAME}"
-    WriteRegStr HKCR "slippi\shell" "" ""
-    WriteRegStr HKCR "slippi\shell\Open" "" ""
-    WriteRegStr HKCR "slippi\shell\Open\command" "" "$\"$INSTDIR\${APP_EXECUTABLE_FILENAME}$\" $\"%1$\""
+    DeleteRegKey HKCR "lylat"
+    WriteRegStr HKCR "lylat" "" "URL:lylat"
+    WriteRegStr HKCR "lylat" "URL Protocol" ""
+    WriteRegStr HKCR "lylat\DefaultIcon" "" "$INSTDIR\${APP_EXECUTABLE_FILENAME}"
+    WriteRegStr HKCR "lylat\shell" "" ""
+    WriteRegStr HKCR "lylat\shell\Open" "" ""
+    WriteRegStr HKCR "lylat\shell\Open\command" "" "$\"$INSTDIR\${APP_EXECUTABLE_FILENAME}$\" $\"%1$\""
   ${Else}
-    DeleteRegKey HKCU "SOFTWARE\Classes\slippi"
-    WriteRegStr HKCU "SOFTWARE\Classes\slippi" "" "URL:slippi"
-    WriteRegStr HKCU "SOFTWARE\Classes\slippi" "URL Protocol" ""
-    WriteRegStr HKCU "SOFTWARE\Classes\slippi\DefaultIcon" "" "$INSTDIR\${APP_EXECUTABLE_FILENAME}"
-    WriteRegStr HKCU "SOFTWARE\Classes\slippi\shell" "" ""
-    WriteRegStr HKCU "SOFTWARE\Classes\slippi\shell\Open" "" ""
-    WriteRegStr HKCU "SOFTWARE\Classes\slippi\shell\Open\command" "" "$\"$INSTDIR\${APP_EXECUTABLE_FILENAME}$\" $\"%1$\""
+    DeleteRegKey HKCU "SOFTWARE\Classes\lylat"
+    WriteRegStr HKCU "SOFTWARE\Classes\lylat" "" "URL:lylat"
+    WriteRegStr HKCU "SOFTWARE\Classes\lylat" "URL Protocol" ""
+    WriteRegStr HKCU "SOFTWARE\Classes\lylat\DefaultIcon" "" "$INSTDIR\${APP_EXECUTABLE_FILENAME}"
+    WriteRegStr HKCU "SOFTWARE\Classes\lylat\shell" "" ""
+    WriteRegStr HKCU "SOFTWARE\Classes\lylat\shell\Open" "" ""
+    WriteRegStr HKCU "SOFTWARE\Classes\lylat\shell\Open\command" "" "$\"$INSTDIR\${APP_EXECUTABLE_FILENAME}$\" $\"%1$\""
   ${EndIf}
 
   ; Check if we should also install the GC drivers

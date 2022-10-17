@@ -24,7 +24,7 @@ Set your adapter to Wii U/Switch mode and then follow the section for your OS.
 
 ### Windows
 
-When installing Slippi Launcher you would have seen an option to also "install Gamecube adapter drivers". If you selected this, your adapter should already work once plugged into your computer. If you didn't select this option, you can just reinstall the latest version of the Slippi Launcher by downloading the installer from the [official Slippi website](https://slippi.gg). Make sure to select the "install Gamecube adapter drivers" option once the installer is run.
+When installing Lylat Launcher you would have seen an option to also "install Gamecube adapter drivers". If you selected this, your adapter should already work once plugged into your computer. If you didn't select this option, you can just reinstall the latest version of the Lylat Launcher by downloading the installer from the [official Slippi website](https://slippi.gg). Make sure to select the "install Gamecube adapter drivers" option once the installer is run.
 
 You can confirm your controller adapters work by doing the following:
 

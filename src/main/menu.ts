@@ -58,10 +58,10 @@ export class MenuBuilder {
 
   private buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: "Slippi Launcher",
+      label: "Lylat Launcher",
       submenu: [
         {
-          label: "About Slippi Launcher",
+          label: "About Lylat Launcher",
           selector: "orderFrontStandardAboutPanel:",
         },
         { type: "separator" },
@@ -78,7 +78,7 @@ export class MenuBuilder {
         { label: "Services", submenu: [] },
         { type: "separator" },
         {
-          label: "Hide Slippi Launcher",
+          label: "Hide Lylat Launcher",
           accelerator: "Command+H",
           selector: "hide:",
         },
@@ -175,7 +175,7 @@ export class MenuBuilder {
         { label: "Bring All to Front", selector: "arrangeInFront:" },
         {
           id: "macos-window-toggle",
-          label: "Slippi Launcher",
+          label: "Lylat Launcher",
           accelerator: "Cmd+0",
           visible: false,
           enabled: false,
