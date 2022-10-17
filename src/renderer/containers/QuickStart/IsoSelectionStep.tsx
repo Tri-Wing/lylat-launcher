@@ -11,7 +11,7 @@ import { useDropzone } from "react-dropzone";
 import { useQuery } from "react-query";
 
 import { ConfirmationModal } from "@/components/ConfirmationModal";
-import { useIsoPath } from "@/lib/hooks/useSettings";
+import { useIsoPathVanilla } from "@/lib/hooks/useSettings";
 import { useToasts } from "@/lib/hooks/useToasts";
 import { hasBorder } from "@/styles/hasBorder";
 
@@ -66,7 +66,7 @@ export const IsoSelectionStep: React.FC = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const loading = validIsoPathQuery.isLoading;
-  const [, setIsoPath] = useIsoPath();
+  const [, setIsoPathVanilla] = useIsoPathVanilla();
 
   const onDrop = (acceptedFiles: File[]) => {
     if (loading || acceptedFiles.length === 0) {
@@ -95,8 +95,8 @@ export const IsoSelectionStep: React.FC = () => {
   const unknownIso = Boolean(tempIsoPath) && !loading && validIsoPath === IsoValidity.UNKNOWN;
   const handleClose = () => setTempIsoPath("");
   const onConfirm = useCallback(() => {
-    setIsoPath(tempIsoPath).catch(showError);
-  }, [showError, setIsoPath, tempIsoPath]);
+    setIsoPathVanilla(tempIsoPath).catch(showError);
+  }, [showError, setIsoPathVanilla, tempIsoPath]);
 
   React.useEffect(() => {
     if (invalidIso) {

@@ -48,7 +48,7 @@ function generateSteps(
 
 export const useQuickStart = () => {
   const navigate = useNavigate();
-  const savedIsoPath = useSettings((store) => store.settings.isoPath);
+  const savedIsoPath = useSettings((store) => store.settings.isoPathVanilla);
   const user = useAccount((store) => store.user);
   const playKey = useAccount((store) => store.playKey);
   const serverError = useAccount((store) => store.serverError);

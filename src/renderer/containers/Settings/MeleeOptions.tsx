@@ -13,7 +13,7 @@ import React from "react";
 import { PathInput } from "@/components/PathInput";
 import { useDolphinStore } from "@/lib/dolphin/useDolphinStore";
 import { useIsoVerification } from "@/lib/hooks/useIsoVerification";
-import { useIsoPath, useLaunchMeleeOnPlay } from "@/lib/hooks/useSettings";
+import { useIsoPathActive, useIsoPathVanilla, useLaunchMeleeOnPlay } from "@/lib/hooks/useSettings";
 
 import { SettingItem } from "./SettingItem";
 
@@ -35,7 +35,8 @@ const renderValidityStatus = (isoValidity: IsoValidity) => {
 export const MeleeOptions: React.FC = () => {
   const verifying = useIsoVerification((state) => state.isValidating);
   const isoValidity = useIsoVerification((state) => state.validity);
-  const [isoPath, setIsoPath] = useIsoPath();
+  const [isoPathVanilla, setIsoPathVanilla] = useIsoPathVanilla();
+  const [isoPathActive, setIsoPathActive] = useIsoPathActive();
   const [launchMeleeOnPlay, setLaunchMelee] = useLaunchMeleeOnPlay();
   const netplayDolphinOpen = useDolphinStore((store) => store.netplayOpened);
   const playbackDolphinOpen = useDolphinStore((store) => store.playbackOpened);
@@ -50,8 +51,8 @@ export const MeleeOptions: React.FC = () => {
       <SettingItem name="Melee ISO File" description="The path to an NTSC Melee 1.02 ISO.">
         <PathInput
           tooltipText={netplayDolphinOpen || playbackDolphinOpen ? "Close Dolphin to change this setting" : ""}
-          value={isoPath !== null ? isoPath : ""}
-          onSelect={setIsoPath}
+          value={isoPathVanilla !== null ? isoPathVanilla : ""}
+          onSelect={setIsoPathVanilla}
           placeholder="No file set"
           disabled={verifying || netplayDolphinOpen || playbackDolphinOpen}
           options={{
@@ -71,6 +72,18 @@ export const MeleeOptions: React.FC = () => {
               {verifying ? <CircularProgress size={25} color="inherit" /> : renderValidityStatus(isoValidity)}
             </ValidationContainer>
           }
+        />
+      </SettingItem>
+      <SettingItem name="Active ISO File" description="The path to the Melee ISO you want to play.">
+        <PathInput
+          tooltipText={netplayDolphinOpen || playbackDolphinOpen ? "Close Dolphin to change this setting" : ""}
+          value={isoPathActive !== null ? isoPathActive : ""}
+          onSelect={setIsoPathActive}
+          placeholder="No file set"
+          disabled={netplayDolphinOpen || playbackDolphinOpen}
+          options={{
+            filters: [{ name: "Melee ISO", extensions: ["iso", "gcm", "gcz"] }],
+          }}
         />
       </SettingItem>
       <SettingItem name="Play Button Action" description="Choose what happens when the Play button is pressed.">

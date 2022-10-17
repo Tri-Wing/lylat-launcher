@@ -48,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ menuItems }) => {
   const currentUser = useAccount((store) => store.user);
   const playKey = useAccount((store) => store.playKey);
   const serverError = useAccount((store) => store.serverError);
-  const meleeIsoPath = useSettings((store) => store.settings.isoPath) || undefined;
+  const meleeIsoPath = useSettings((store) => store.settings.isoPathVanilla) || undefined;
   const { showError } = useToasts();
   const { launchNetplay } = useDolphinActions(dolphinService);
 

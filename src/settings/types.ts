@@ -18,7 +18,8 @@ export type AppSettings = {
   previousVersion?: string;
   connections: StoredConnection[];
   settings: {
-    isoPath: string | null;
+    isoPathVanilla: string | null;
+    isoPathActive: string | null;
     rootSlpPath: string;
     useMonthlySubfolders: boolean;
     spectateSlpPath: string;

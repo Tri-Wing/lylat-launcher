@@ -10,7 +10,8 @@ import {
   ipc_editConnection,
   ipc_setAutoUpdateLauncher,
   ipc_setExtraSlpPaths,
-  ipc_setIsoPath,
+  ipc_setIsoPathActive,
+  ipc_setIsoPathVanilla,
   ipc_setLaunchMeleeOnPlay,
   ipc_setNetplayDolphinPath,
   ipc_setPlaybackDolphinPath,
@@ -37,10 +38,21 @@ export default function setupSettingsIpc({
     event.returnValue = settings;
   });
 
-  ipc_setIsoPath.main!.handle(async ({ isoPath }) => {
-    await settingsManager.setIsoPath(isoPath);
-    if (isoPath) {
-      const gameDir = path.dirname(isoPath);
+  ipc_setIsoPathVanilla.main!.handle(async ({ isoPathVanilla }) => {
+    await settingsManager.setIsoPathVanilla(isoPathVanilla);
+    if (isoPathVanilla) {
+      const gameDir = path.dirname(isoPathVanilla);
+      const netplayInstall = dolphinManager.getInstallation(DolphinLaunchType.NETPLAY);
+      const playbackInstall = dolphinManager.getInstallation(DolphinLaunchType.PLAYBACK);
+      await Promise.all([netplayInstall.addGamePath(gameDir), playbackInstall.addGamePath(gameDir)]);
+    }
+    return { success: true };
+  });
+
+  ipc_setIsoPathActive.main!.handle(async ({ isoPathActive }) => {
+    await settingsManager.setIsoPathActive(isoPathActive);
+    if (isoPathActive) {
+      const gameDir = path.dirname(isoPathActive);
       const netplayInstall = dolphinManager.getInstallation(DolphinLaunchType.NETPLAY);
       const playbackInstall = dolphinManager.getInstallation(DolphinLaunchType.PLAYBACK);
       await Promise.all([netplayInstall.addGamePath(gameDir), playbackInstall.addGamePath(gameDir)]);

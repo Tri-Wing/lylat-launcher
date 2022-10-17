@@ -102,12 +102,12 @@ export const useAppListeners = () => {
     return consoleService.onConsoleMirrorStatusUpdated(updateConsoleStatus);
   }, [updateConsoleStatus, consoleService]);
 
-  // Automatically run ISO verification whenever the isoPath changes
-  const isoPath = useSettings((store) => store.settings.isoPath);
+  // Automatically run ISO verification whenever the iso Path changes
+  const isoPathVanilla = useSettings((store) => store.settings.isoPathVanilla);
   const setIsValidating = useIsoVerification((store) => store.setIsValidating);
   const setIsValid = useIsoVerification((store) => store.setIsValid);
   React.useEffect(() => {
-    if (!isoPath) {
+    if (!isoPathVanilla) {
       setIsValid(IsoValidity.UNVALIDATED);
       setIsValidating(false);
       return;
@@ -116,9 +116,9 @@ export const useAppListeners = () => {
     // Start iso validation
     setIsValidating(true);
     window.electron.common
-      .checkValidIso(isoPath)
+      .checkValidIso(isoPathVanilla)
       .then((isoCheckResult) => {
-        if (isoCheckResult.path !== isoPath) {
+        if (isoCheckResult.path !== isoPathVanilla) {
           // The ISO path changed before verification completed
           // so just do nothing.
           return;
@@ -130,7 +130,7 @@ export const useAppListeners = () => {
       .finally(() => {
         setIsValidating(false);
       });
-  }, [isoPath, setIsValid, setIsValidating]);
+  }, [isoPathVanilla, setIsValid, setIsValidating]);
 
   const clearSelectedFile = useReplays((store) => store.clearSelectedFile);
   const { goToReplayStatsPage } = useReplayBrowserNavigation();

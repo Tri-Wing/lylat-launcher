@@ -25,11 +25,11 @@ const generateTempCommunicationFile = (): string => {
 export class DolphinInstance extends EventEmitter {
   protected process: ChildProcess | null = null;
   private executablePath: string;
-  private isoPath: string | null = null;
+  private isoPathVanilla: string | null = null;
 
-  constructor(execPath: string, isoPath?: string) {
+  constructor(execPath: string, isoPathVanilla?: string) {
     super();
-    this.isoPath = isoPath ?? null;
+    this.isoPathVanilla = isoPathVanilla ?? null;
     this.executablePath = execPath;
   }
 
@@ -40,8 +40,8 @@ export class DolphinInstance extends EventEmitter {
     const params: string[] = [];
 
     // Auto-start the ISO if provided
-    if (this.isoPath) {
-      params.push("-b", "-e", this.isoPath);
+    if (this.isoPathVanilla) {
+      params.push("-b", "-e", this.isoPathVanilla);
     }
 
     // Add additional params if necessary
@@ -79,8 +79,8 @@ export class DolphinInstance extends EventEmitter {
 export class PlaybackDolphinInstance extends DolphinInstance {
   private commPath: string;
 
-  constructor(execPath: string, isoPath?: string) {
-    super(execPath, isoPath);
+  constructor(execPath: string, isoPathVanilla?: string) {
+    super(execPath, isoPathVanilla);
     this.commPath = generateTempCommunicationFile();
 
     // Delete the comm file once Dolphin is closed

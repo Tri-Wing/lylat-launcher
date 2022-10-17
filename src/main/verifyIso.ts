@@ -93,25 +93,25 @@ isoHashes.set("c7c0866fbe6d7ebf3b9c4236f4f32f4c8f65b578", {
   name: "Taikenban (demo)",
 });
 
-export async function verifyIso(isoPath: string): Promise<IsoValidity> {
-  const exists = await fileExists(isoPath);
+export async function verifyIso(isoPathVanilla: string): Promise<IsoValidity> {
+  const exists = await fileExists(isoPathVanilla);
   if (!exists) {
-    return Promise.reject(`Error verifying ISO: File ${isoPath} does not exist`);
+    return Promise.reject(`Error verifying ISO: File ${isoPathVanilla} does not exist`);
   }
 
   return new Promise((resolve, reject) => {
     const hash = crypto.createHash("sha1");
-    const input = fs.createReadStream(isoPath);
+    const input = fs.createReadStream(isoPathVanilla);
     let checkedRevision = false;
 
     input.on("error", (err) => {
-      reject(`Error reading ISO file ${isoPath}: ${err}`);
+      reject(`Error reading ISO file ${isoPathVanilla}: ${err}`);
     });
 
     input.on("readable", () => {
       const data: Buffer = input.read();
       if (data) {
-        if (!checkedRevision && !isoPath.endsWith(".gcz")) {
+        if (!checkedRevision && !isoPathVanilla.endsWith(".gcz")) {
           checkedRevision = true;
           const revision = data.readInt8(7);
           if (revision !== 2) {

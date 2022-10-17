@@ -8,7 +8,8 @@ import {
   ipc_openSettingsModalEvent,
   ipc_setAutoUpdateLauncher,
   ipc_setExtraSlpPaths,
-  ipc_setIsoPath,
+  ipc_setIsoPathActive,
+  ipc_setIsoPathVanilla,
   ipc_setLaunchMeleeOnPlay,
   ipc_setNetplayDolphinPath,
   ipc_setPlaybackDolphinPath,
@@ -35,8 +36,11 @@ export default {
     });
     return destroy;
   },
-  async setIsoPath(isoPath: string | null): Promise<void> {
-    await ipc_setIsoPath.renderer!.trigger({ isoPath });
+  async setIsoPathVanilla(isoPathVanilla: string | null): Promise<void> {
+    await ipc_setIsoPathVanilla.renderer!.trigger({ isoPathVanilla: isoPathVanilla });
+  },
+  async setIsoPathActive(isoPathActive: string | null): Promise<void> {
+    await ipc_setIsoPathActive.renderer!.trigger({ isoPathActive: isoPathActive });
   },
   async setRootSlpPath(rootSlpPath: string): Promise<void> {
     await ipc_setRootSlpPath.renderer!.trigger({ path: rootSlpPath });

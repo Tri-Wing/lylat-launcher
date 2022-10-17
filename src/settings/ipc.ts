@@ -5,7 +5,17 @@ import type { AppSettings, StoredConnection } from "./types";
 
 // Handlers
 
-export const ipc_setIsoPath = makeEndpoint.main("setIsoPath", <{ isoPath: string | null }>_, <SuccessPayload>_);
+export const ipc_setIsoPathVanilla = makeEndpoint.main(
+  "setIsoPathVanilla",
+  <{ isoPathVanilla: string | null }>_,
+  <SuccessPayload>_,
+);
+
+export const ipc_setIsoPathActive = makeEndpoint.main(
+  "setIsoPathActive",
+  <{ isoPathActive: string | null }>_,
+  <SuccessPayload>_,
+);
 
 export const ipc_setRootSlpPath = makeEndpoint.main("setRootSlpPath", <{ path: string }>_, <SuccessPayload>_);
 

@@ -32,9 +32,14 @@ export class DolphinManager {
       onProgress: (current, total) => this._onProgress(dolphinType, current, total),
       onComplete: () => this._onComplete(dolphinType),
     });
-    const isoPath = this.settingsManager.get().settings.isoPath;
-    if (isoPath) {
-      const gameDir = path.dirname(isoPath);
+    const isoPathVanilla = this.settingsManager.get().settings.isoPathVanilla;
+    if (isoPathVanilla) {
+      const gameDir = path.dirname(isoPathVanilla);
+      await dolphinInstall.addGamePath(gameDir);
+    }
+    const isoPathActive = this.settingsManager.get().settings.isoPathActive;
+    if (isoPathActive) {
+      const gameDir = path.dirname(isoPathActive);
       await dolphinInstall.addGamePath(gameDir);
     }
   }
@@ -175,9 +180,14 @@ export class DolphinManager {
       onProgress: (current, total) => this._onProgress(launchType, current, total),
     });
 
-    const isoPath = this.settingsManager.get().settings.isoPath;
-    if (isoPath) {
-      const gameDir = path.dirname(isoPath);
+    const isoPathVanilla = this.settingsManager.get().settings.isoPathVanilla;
+    if (isoPathVanilla) {
+      const gameDir = path.dirname(isoPathVanilla);
+      await installation.addGamePath(gameDir);
+    }
+    const isoPathActive = this.settingsManager.get().settings.isoPathActive;
+    if (isoPathActive) {
+      const gameDir = path.dirname(isoPathActive);
       await installation.addGamePath(gameDir);
     }
 
@@ -185,7 +195,10 @@ export class DolphinManager {
   }
 
   private async _getIsoPath(): Promise<string | undefined> {
-    const meleeIsoPath = this.settingsManager.get().settings.isoPath ?? undefined;
+    const meleeIsoPath =
+      this.settingsManager.get().settings.isoPathActive ??
+      this.settingsManager.get().settings.isoPathVanilla ??
+      undefined;
     if (meleeIsoPath) {
       // Make sure the file actually exists
       if (!(await fileExists(meleeIsoPath))) {

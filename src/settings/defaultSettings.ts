@@ -14,7 +14,8 @@ function getDefaultRootSlpPath(): string {
 export const defaultAppSettings: AppSettings = {
   connections: [],
   settings: {
-    isoPath: null,
+    isoPathVanilla: null,
+    isoPathActive: null,
     rootSlpPath: getDefaultRootSlpPath(),
     useMonthlySubfolders: false,
     spectateSlpPath: path.join(getDefaultRootSlpPath(), "Spectate"),

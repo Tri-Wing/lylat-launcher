@@ -21,9 +21,9 @@ export class SettingsManager {
     const restoredSettings = electronSettings.getSync() as Partial<AppSettings>;
 
     // If the ISO file no longer exists, don't restore it
-    if (restoredSettings.settings?.isoPath) {
-      if (!fs.existsSync(restoredSettings.settings.isoPath)) {
-        restoredSettings.settings.isoPath = null;
+    if (restoredSettings.settings?.isoPathVanilla) {
+      if (!fs.existsSync(restoredSettings.settings.isoPathVanilla)) {
+        restoredSettings.settings.isoPathVanilla = null;
       }
     }
     this.appSettings = restoredSettings;
@@ -53,8 +53,12 @@ export class SettingsManager {
     return this.get().settings.useMonthlySubfolders;
   }
 
-  public async setIsoPath(isoPath: string | null): Promise<void> {
-    await this._set("settings.isoPath", isoPath);
+  public async setIsoPathVanilla(isoPathVanilla: string | null): Promise<void> {
+    await this._set("settings.isoPathVanilla", isoPathVanilla);
+  }
+
+  public async setIsoPathActive(isoPathActive: string | null): Promise<void> {
+    await this._set("settings.isoPathActive", isoPathActive);
   }
 
   public async setRootSlpPath(slpPath: string): Promise<void> {

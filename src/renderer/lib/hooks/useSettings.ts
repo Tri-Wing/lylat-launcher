@@ -18,12 +18,20 @@ export const useSettings = create(
   ),
 );
 
-export const useIsoPath = () => {
-  const isoPath = useSettings((store) => store.settings.isoPath);
-  const setPath = async (isoPath: string | null) => {
-    await window.electron.settings.setIsoPath(isoPath);
+export const useIsoPathVanilla = () => {
+  const isoPathVanilla = useSettings((store) => store.settings.isoPathVanilla);
+  const setPathVanilla = async (isoPathVanilla: string | null) => {
+    await window.electron.settings.setIsoPathVanilla(isoPathVanilla);
   };
-  return [isoPath, setPath] as const;
+  return [isoPathVanilla, setPathVanilla] as const;
+};
+
+export const useIsoPathActive = () => {
+  const isoPathActive = useSettings((store) => store.settings.isoPathActive);
+  const setPathActive = async (isoPathActive: string | null) => {
+    await window.electron.settings.setIsoPathActive(isoPathActive);
+  };
+  return [isoPathActive, setPathActive] as const;
 };
 
 export const useRootSlpPath = () => {
