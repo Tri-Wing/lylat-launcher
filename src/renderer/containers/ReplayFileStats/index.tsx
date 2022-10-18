@@ -155,7 +155,7 @@ export const ReplayFileStats: React.FC<ReplayFileStatsProps> = (props) => {
           <IconButton onClick={handleRevealLocation} size="small">
             <FolderIcon
               css={css`
-                color: ${colors.purpleLight};
+                color: ${colors.bluegrayLight};
               `}
             />
           </IconButton>

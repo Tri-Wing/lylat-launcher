@@ -9,11 +9,11 @@ export const Button: React.FC<ButtonProps> = (props) => {
       variant="contained"
       color="inherit"
       sx={{
-        color: colors.purpleDarker,
+        color: colors.bluegrayDarker,
         fontWeight: 500,
         fontSize: 12,
         "& .MuiButton-startIcon": {
-          color: colors.purpleLighter,
+          color: colors.bluegrayLighter,
         },
       }}
       {...rest}

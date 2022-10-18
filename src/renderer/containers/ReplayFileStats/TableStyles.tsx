@@ -14,7 +14,7 @@ export const Table: React.FC = (props) => {
         height: "fit-content",
         borderRadius: 4,
         border: "none",
-        backgroundColor: alpha(colors.purpleDark, 0.9),
+        backgroundColor: alpha(colors.bluegrayDark, 0.9),
       }}
     >
       {props.children}

@@ -32,7 +32,7 @@ const isMac = window.electron.common.isMac;
 
 const OuterBox = styled(Box)`
   background: radial-gradient(circle at left, #323249, transparent 30%);
-  background-color: ${colors.purpleDark};
+  background-color: ${colors.bluegrayDark};
   height: 70px;
 `;
 export interface HeaderProps {

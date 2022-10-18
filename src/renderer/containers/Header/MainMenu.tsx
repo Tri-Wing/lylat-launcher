@@ -79,6 +79,6 @@ const MenuButton = styled.div<{
     border-style: solid;
     border-width: ${(props) => (props.selected ? "10px" : "0")};
     border-color: transparent;
-    border-bottom-color: ${(props) => (props.selected ? colors.purpleDarker : "transparent")};
+    border-bottom-color: ${(props) => (props.selected ? colors.bluegrayDarker : "transparent")};
   }
 `;

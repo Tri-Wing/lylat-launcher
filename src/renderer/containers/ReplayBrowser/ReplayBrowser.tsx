@@ -193,7 +193,7 @@ export const ReplayBrowser: React.FC = () => {
               <IconButton onClick={() => window.electron.shell.openPath(currentFolder)} size="small">
                 <FolderIcon
                   css={css`
-                    color: ${colors.purpleLight};
+                    color: ${colors.bluegrayLight};
                   `}
                 />
               </IconButton>

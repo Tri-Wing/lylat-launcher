@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
           size="small"
           onClick={() => window.electron.shell.openPath(spectateSlpFolder)}
           css={css`
-            color: ${colors.purpleLight};
+            color: ${colors.bluegrayLight};
           `}
         >
           <FolderIcon />
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
           margin-left: 10px;
           margin-right: 15px;
           padding-right: 20px;
-          border-right: solid 1px ${colors.purple};
+          border-right: solid 1px ${colors.bluegray};
         `}
         label="Save spectated games to"
       >
@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
       <Button
         size="small"
         css={css`
-          color: ${colors.purpleLight};
+          color: ${colors.bluegrayLight};
           text-transform: initial;
         `}
         onClick={onClick}

@@ -87,7 +87,7 @@ const createWindow = async () => {
     height: 728,
     minHeight: isDevelopment ? undefined : 450,
     minWidth: isDevelopment ? undefined : 900,
-    backgroundColor: colors.purpleDarker,
+    backgroundColor: colors.bluegrayDarker,
 
     // This setting only takes effect on macOS, and simply opts it into the modern
     // Big-Sur frame UI for the window style.

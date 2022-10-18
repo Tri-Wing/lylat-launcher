@@ -50,7 +50,7 @@ export const HomePage = React.memo(function HomePage() {
             </Main>
           }
           rightSide={<TwitterFeed />}
-          rightStyle={{ backgroundColor: colors.purpleDark }}
+          rightStyle={{ backgroundColor: colors.bluegrayDark }}
           style={{ gridTemplateColumns: "auto 300px" }}
         />
       </div>

@@ -56,7 +56,7 @@ export const BroadcastPanel: React.FC<BroadcastPanelProps> = ({
             css={css`
               text-transform: uppercase;
               font-weight: bold;
-              color: ${colors.purpleLight};
+              color: ${colors.bluegrayLight};
               margin-right: 10px;
             `}
           >

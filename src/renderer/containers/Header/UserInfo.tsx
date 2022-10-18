@@ -65,7 +65,7 @@ export const UserInfo = ({
             css={css`
               font-weight: bold;
               font-size: 14px;
-              color: ${showError ? "red" : colors.purpleLight};
+              color: ${showError ? "red" : colors.bluegrayLight};
             `}
           >
             {subtext}

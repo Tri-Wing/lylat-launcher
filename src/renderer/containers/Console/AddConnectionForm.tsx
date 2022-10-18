@@ -128,7 +128,7 @@ export const AddConnectionForm: React.FC<AddConnectionFormProps> = ({ defaultVal
             css={css`
               padding-left: 20px;
               padding-bottom: 10px;
-              border-left: solid 3px ${colors.purpleLight};
+              border-left: solid 3px ${colors.bluegrayLight};
             `}
           >
             <Notice>

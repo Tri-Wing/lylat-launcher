@@ -5,7 +5,7 @@ export const UserIcon = ({ imageUrl, size = 45 }: { imageUrl: string; size?: num
   return (
     <div
       css={css`
-        border: solid 3px ${colors.purpleLight};
+        border: solid 3px ${colors.bluegrayLight};
         background-color: white;
         border-radius: 50%;
         overflow: hidden;

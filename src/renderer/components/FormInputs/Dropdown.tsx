@@ -44,7 +44,7 @@ const Select = styled(MatSelect)`
   .MuiOutlinedInput-notchedOutline {
     border-width: 2px;
     border-radius: 10px;
-    border-color: ${colors.purpleDark};
+    border-color: ${colors.bluegrayDark};
   }
   .MuiSelect-outlined {
     padding: 8px;
@@ -53,7 +53,7 @@ const Select = styled(MatSelect)`
     font-size: 12px;
   }
   .MuiSelect-icon {
-    color: ${colors.purpleLight};
+    color: ${colors.bluegrayLight};
     top: 50%;
     transform: translateY(-50%);
   }

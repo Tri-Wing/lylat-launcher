@@ -171,8 +171,8 @@ const Outer = styled.div<{
   margin: 10px;
   background: ${(p) =>
     p.backgroundImage
-      ? `linear-gradient(to right, ${colors.purpleDark} 20%, transparent 35%, transparent 65%, ${colors.purpleDark} 80%)`
-      : colors.purpleDark};
+      ? `linear-gradient(to right, ${colors.bluegrayDark} 20%, transparent 35%, transparent 65%, ${colors.bluegrayDark} 80%)`
+      : colors.bluegrayDark};
   &::before {
     z-index: -1;
     position: absolute;
@@ -228,7 +228,7 @@ const ReplayActionButton = React.memo(({ label, color, onClick, ...rest }: Repla
           css={css`
             padding: 5px;
             margin: 0 5px;
-            color: ${color ?? colors.purplePrimary};
+            color: ${color ?? colors.grayPrimary};
           `}
           size="large"
           onClick={(e) => {

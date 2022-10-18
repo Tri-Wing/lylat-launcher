@@ -44,7 +44,7 @@ const Outer = styled.div`
   justify-content: center;
   position: relative;
   height: 30px;
-  background-color: ${colors.purpleLight};
+  background-color: ${colors.bluegrayLight};
   text-align: center;
   font-size: 14px;
 `;

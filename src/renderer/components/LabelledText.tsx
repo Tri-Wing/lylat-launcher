@@ -24,7 +24,7 @@ export const LabelledText: React.FC<LabelledTextProps> = ({ label, children, cla
           font-weight: bold;
           margin-bottom: 4px;
           text-transform: uppercase;
-          color: ${colors.purpleLight};
+          color: ${colors.bluegrayLight};
           font-family: ${withFont("Maven Pro")};
         `}
       >

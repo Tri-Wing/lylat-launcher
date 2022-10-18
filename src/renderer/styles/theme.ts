@@ -15,15 +15,15 @@ const theme = createTheme({
       secondary: "#B4B4B4",
     },
     primary: {
-      main: colors.greenPrimary,
+      main: colors.bluePrimary,
     },
     secondary: {
-      main: colors.purplePrimary,
+      main: colors.grayPrimary,
     },
     divider: "rgba(255,255,255)",
     background: {
-      paper: colors.purpleDarker,
-      default: colors.purple,
+      paper: colors.bluegrayDarker,
+      default: colors.bluegray,
     },
   },
   typography: {
@@ -67,7 +67,7 @@ const addOverrides = (theme: Theme) => {
           },
           tooltip: {
             backgroundColor: colors.offWhite,
-            color: colors.purpleDarker,
+            color: colors.bluegrayDarker,
             boxShadow: theme.shadows[1],
             fontSize: 13,
           },

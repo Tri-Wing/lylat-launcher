@@ -22,7 +22,7 @@ const getColor = (props: any, defaultColor = "#eeeeee") => {
     return "#00e676";
   }
   if (props.isDragActive) {
-    return colors.greenPrimary;
+    return colors.bluePrimary;
   }
   return defaultColor;
 };

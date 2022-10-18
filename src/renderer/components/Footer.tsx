@@ -18,7 +18,7 @@ export const BasicFooter = styled.div`
   align-items: center;
   background-color: black;
   font-size: 14px;
-  color: ${colors.purpleLight};
+  color: ${colors.bluegrayLight};
 
   svg {
     width: 20px;
@@ -33,14 +33,14 @@ export const Footer: React.FC = () => {
         <TwitterIcon />
       </Social>
       <Social title="Join the Discord" url={socials.discordUrl}>
-        <DiscordIcon fill={colors.purpleLight} />
+        <DiscordIcon fill={colors.bluegrayLight} />
       </Social>
       <div
         css={css`
           display: flex;
           height: 30px;
           align-items: center;
-          border-left: solid 1px ${colors.purpleDark};
+          border-left: solid 1px ${colors.bluegrayDark};
           margin-left: 20px;
         `}
       >
@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
           >
             Support Lylat
           </div>
-          <PatreonIcon fill={colors.purpleLight} />
+          <PatreonIcon fill={colors.bluegrayLight} />
         </Social>
       </div>
     </Outer>

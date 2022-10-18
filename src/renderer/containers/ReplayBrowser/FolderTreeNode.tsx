@@ -38,7 +38,7 @@ export const FolderTreeNode: React.FC<FolderTreeNodeProps> = ({
         onClick={() => onClick(folder.fullPath)}
         button={true}
         style={{
-          backgroundColor: isSelected ? colors.greenPrimary : undefined,
+          backgroundColor: isSelected ? colors.bluePrimary : undefined,
           color: labelColor,
           padding: 0,
           paddingLeft: nestLevel * 15,

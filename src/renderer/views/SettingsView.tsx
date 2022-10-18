@@ -69,7 +69,7 @@ export const SettingsView: React.FC = () => {
       </Tooltip>
       <DualPane
         id="settings-view"
-        leftStyle={{ backgroundColor: colors.purpleDark }}
+        leftStyle={{ backgroundColor: colors.bluegrayDark }}
         leftSide={
           <MenuColumn>
             <div
@@ -97,7 +97,7 @@ export const SettingsView: React.FC = () => {
                             margin-top: 10px;
                             margin-bottom: 5px;
                             font-size: 14px;
-                            color: ${colors.purpleLight};
+                            color: ${colors.bluegrayLight};
                           `}
                         >
                           {section.title}

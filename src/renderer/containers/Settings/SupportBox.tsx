@@ -70,7 +70,7 @@ export const SupportBox = () => {
         <div>
           <Button
             LinkComponent={A}
-            startIcon={<DiscordIcon fill={colors.purpleLighter} style={{ height: 18, width: 18 }} />}
+            startIcon={<DiscordIcon fill={colors.bluegrayLighter} style={{ height: 18, width: 18 }} />}
             href={socials.discordUrl}
           >
             Join the Discord
@@ -87,7 +87,7 @@ export const SupportBox = () => {
 };
 
 const Outer = styled.div`
-  background-color: ${colors.purpleLight};
+  background-color: ${colors.bluegrayLight};
   color: ${colors.offWhite};
   border-radius: 10px;
   padding: 15px;
