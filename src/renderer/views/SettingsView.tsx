@@ -18,7 +18,7 @@ import { BuildInfo } from "@/containers/Settings/BuildInfo";
 import { useMousetrap } from "@/lib/hooks/useMousetrap";
 import { useSettingsModal } from "@/lib/hooks/useSettingsModal";
 import { platformTitleBarStyles } from "@/styles/platformTitleBarStyles";
-import { withSlippiBackground } from "@/styles/withSlippiBackground";
+import { withLylatBackground } from "@/styles/withLylatBackground";
 
 import { settings } from "../containers/Settings";
 
@@ -27,7 +27,7 @@ const Outer = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
-  ${withSlippiBackground}
+  ${withLylatBackground}
 `;
 
 const MenuColumn = styled.div`

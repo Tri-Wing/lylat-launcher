@@ -1,5 +1,5 @@
 import { colors } from "@common/colors";
-import { slippiHomepage } from "@common/constants";
+import { lylatHomepage } from "@common/constants";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -19,7 +19,7 @@ import { useSettings } from "@/lib/hooks/useSettings";
 import { useSettingsModal } from "@/lib/hooks/useSettingsModal";
 import { useToasts } from "@/lib/hooks/useToasts";
 import { useServices } from "@/services";
-import slippiLogo from "@/styles/images/slippi-logo.svg";
+import lylatLogo from "@/styles/images/lylat-logo.svg";
 import { platformTitleBarStyles } from "@/styles/platformTitleBarStyles";
 
 import { ActivateOnlineDialog } from "./ActivateOnlineDialog";
@@ -31,8 +31,8 @@ import { UserMenu } from "./UserMenu";
 const isMac = window.electron.common.isMac;
 
 const OuterBox = styled(Box)`
-  background: radial-gradient(circle at left, #5c1394, transparent 30%);
-  background-color: ${colors.purple};
+  background: radial-gradient(circle at left, #323249, transparent 30%);
+  background-color: ${colors.purpleDark};
   height: 70px;
 `;
 export interface HeaderProps {
@@ -105,9 +105,9 @@ export const Header: React.FC<HeaderProps> = ({ menuItems }) => {
           padding-left: 5px;
         `}
       >
-        <Tooltip title="Open Slippi.gg">
-          <Button LinkComponent={ExternalLink} href={slippiHomepage} style={isMac ? { marginTop: 10 } : undefined}>
-            <img src={slippiLogo} width="38px" />
+        <Tooltip title="Open Lylat.gg">
+          <Button LinkComponent={ExternalLink} href={lylatHomepage} style={isMac ? { marginTop: 10 } : undefined}>
+            <img src={lylatLogo} width="38px" />
           </Button>
         </Tooltip>
         <div

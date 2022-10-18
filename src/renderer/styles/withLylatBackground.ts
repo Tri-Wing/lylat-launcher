@@ -1,11 +1,11 @@
 import { css } from "@emotion/react";
 
-import slippiLogo from "@/styles/images/slippi-logo.svg";
+import lylatLogo from "@/styles/images/lylat-logo.svg";
 
-export const withSlippiBackground = css`
+export const withLylatBackground = css`
   &::before {
     content: "";
-    background-image: url("${slippiLogo}");
+    background-image: url("${lylatLogo}");
     background-size: 50%;
     background-position: 110% 120%;
     background-repeat: no-repeat;

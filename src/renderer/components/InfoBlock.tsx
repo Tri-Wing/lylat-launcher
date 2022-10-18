@@ -1,3 +1,4 @@
+import { colors } from "@common/colors";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import Paper from "@mui/material/Paper";
@@ -29,8 +30,8 @@ const Header: React.FC = ({ children }) => {
         align-items: center;
         h3 {
           flex: 1;
-          color: #39d05d;
           margin: 0;
+          color: ${colors.greenLight};
           margin-bottom: 20px;
         }
       `}

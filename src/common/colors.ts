@@ -1,16 +1,16 @@
 export const colors = {
-  greenPrimary: "#72d07f", // Should be accessed with useTheme instead
-  purplePrimary: "#b984bb", // Should be accessed with useTheme instead
+  greenPrimary: "#74a6d2", // Should be accessed with useTheme instead
+  purplePrimary: "#9c9cab", // Should be accessed with useTheme instead
 
   // These are used on the home/launch page
   grayDark: "#222222",
-  greenDark: "#21BA45",
-  greenDarker: "#208E2C",
-  purpleLighter: "#9f74c0",
-  purpleLight: "#8665A0",
-  purple: "#310057",
-  purpleDark: "#29133B",
-  purpleDarker: "#1B0B28",
+  greenDark: "#275277",
+  greenLight: "#3b7cb5",
+  purpleLighter: "#6c6c83",
+  purpleLight: "#5e5e74",
+  purple: "#323249",
+  purpleDark: "#1d1d2b",
+  purpleDarker: "#151521",
   offGray: "#2D313A",
   offWhite: "#E0E0E0",
 };
