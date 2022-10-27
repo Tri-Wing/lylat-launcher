@@ -19,6 +19,7 @@ export async function installServices(): Promise<Services> {
 
   const broadcastService = window.electron.broadcast;
   const consoleService = window.electron.console;
+  const modService = window.electron.mods;
 
   return {
     authService,
@@ -26,5 +27,6 @@ export async function installServices(): Promise<Services> {
     dolphinService,
     broadcastService,
     consoleService,
+    modService,
   };
 }

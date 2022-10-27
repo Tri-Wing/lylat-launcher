@@ -12,3 +12,11 @@ export function monthDayHourFormat(time: moment.Moment): string | null {
 
   return time.format("ll · LT");
 }
+
+export function monthDayFormat(time: moment.Moment): string | null {
+  if (!moment.isMoment(time)) {
+    return null;
+  }
+
+  return time.format("ll");
+}

@@ -5,6 +5,7 @@ import replaysApi from "@replays/api";
 import settingsApi from "@settings/api";
 import { clipboard, contextBridge, shell } from "electron";
 import log from "electron-log";
+import modApi from "mods/api";
 import path from "path";
 
 import commonApi from "./api";
@@ -16,6 +17,7 @@ const api = {
   broadcast: broadcastApi,
   dolphin: dolphinApi,
   replays: replaysApi,
+  mods: modApi,
   path: {
     join: path.join,
   },

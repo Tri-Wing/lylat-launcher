@@ -1,6 +1,7 @@
 import CastOutlinedIcon from "@mui/icons-material/CastOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
+import SdCard from "@mui/icons-material/SdCard";
 import SlowMotionVideoIcon from "@mui/icons-material/SlowMotionVideo";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -15,6 +16,7 @@ import { ReplayBrowserPage } from "@/containers/ReplayBrowser/ReplayBrowserPage"
 import { SpectatePage } from "@/containers/SpectatePage";
 import { usePageNavigationShortcuts } from "@/lib/hooks/useShortcuts";
 import { HomePage } from "@/pages/home/HomePage";
+import { ModsPage } from "@/pages/mods/ModsPage";
 
 interface MainMenuItem extends MenuItem {
   component: React.ReactNode;
@@ -31,12 +33,17 @@ const menuItems: MainMenuItem[] = [
     default: true,
   },
   {
+    subpath: "mods",
+    title: "Mods",
+    component: <ModsPage />,
+    icon: <SdCard />,
+  },
+  {
     subpath: "replays",
     title: "Replays",
     component: <ReplayBrowserPage />,
     icon: <SlowMotionVideoIcon />,
   },
-
   {
     subpath: "spectate",
     title: "Spectate",
