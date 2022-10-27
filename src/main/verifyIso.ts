@@ -14,40 +14,39 @@ isoHashes.set("d4e70c064cc714ba8400a849cf299dbd1aa326fc", {
   valid: IsoValidity.VALID,
   name: "NTSC-U 1.02",
 });
+// Invalid ISOs
 isoHashes.set("6e83240872d47cd080a28dea7b8907140c44bef5", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-U 1.02 NKIT",
 });
 isoHashes.set("3bf23f7c87caadfc983954eb8c6cf2823fa8713b", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-U 1.02 GCZ",
 });
 isoHashes.set("e63d50e63a0cdd357f867342d542e7cec0c3a7c7", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-U 1.02 Scrubbed #1",
 });
 isoHashes.set("55109bc139b947c8b96b5fc913fbd91245104db8", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-U 1.02 Scrubbed #2",
 });
 isoHashes.set("2ce0ccfc8c31eafe2ff354fe03ac2dd94c20b937", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-U 1.02 Scrubbed #3",
 });
 isoHashes.set("49a04772e0a5d1974a4b1c8a7c0d1d71184f3978", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-U 1.02 Scrubbed #4",
 });
 isoHashes.set("71255a30a47b4c6aabb90308d7a514d09d93a7b5", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-J 1.02",
 });
 isoHashes.set("e9ab27b4f8fdfb72adae214f834e201d14944f50", {
-  valid: IsoValidity.VALID,
+  valid: IsoValidity.INVALID,
   name: "NTSC-J 1.02 GCZ",
 });
-
-// Invalid ISOs
 isoHashes.set("2f0bed5e1d92ebb187840c6e1a2f368ce35f6816", {
   valid: IsoValidity.INVALID,
   name: "20XX 3.02",
