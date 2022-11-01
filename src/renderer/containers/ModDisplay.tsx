@@ -1,6 +1,7 @@
 import { colors } from "@common/colors";
+import { IsoValidity } from "@common/types";
 import { css } from "@emotion/react";
-import { Button, Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Popover, Typography } from "@mui/material";
 import { DownloadType } from "mods/types";
 import moment from "moment";
 import React from "react";
@@ -27,21 +28,32 @@ interface ModDisplayProps {
 }
 
 export const ModDisplay = React.memo((props: ModDisplayProps) => {
-  const [isDownloadType, setDownloadType] = React.useState<DownloadType | null>(null);
+  const [downloadType, setDownloadType] = React.useState<DownloadType | null>(null);
+  const [popoverText, setPopoverText] = React.useState("");
   const [isoPathVanilla] = useIsoPathVanilla();
   const isoValidity = useIsoVerification((state) => state.validity);
   const { modService } = useServices();
   const { downloadISOPatch } = useModActions(modService);
 
   const downloadHandler = async (modCategory: string, downloadUrl: string) => {
-    console.log("isoValidity: " + isoValidity);
+    if (downloadType != null) {
+      setPopoverText("Please wait for current download to complete");
+      return;
+    }
 
     if (modCategory === "ISO Patch") {
+      if (isoValidity != IsoValidity.VALID) {
+        setPopoverText(
+          "Installing ISO mods requires a valid SSBM 1.02 ISO to be selected. Click the settings icon to add an ISO.",
+        );
+        return;
+      }
       setDownloadType(DownloadType.ISOPATCH);
+
       if (isoPathVanilla) {
         await downloadISOPatch(downloadUrl, isoPathVanilla);
-        setDownloadType(null);
       }
+      setDownloadType(null);
     }
   };
 
@@ -67,16 +79,16 @@ export const ModDisplay = React.memo((props: ModDisplayProps) => {
               align-items: center;
             `}
           >
-            <Button
-              color="primary"
-              variant="contained"
-              size="small"
+            <ButtonWithPopover
+              buttonText="Download"
+              popoverText={popoverText}
               onClick={() => {
                 void downloadHandler(props.item.category!, downloadUrl);
               }}
-            >
-              Download
-            </Button>
+              onClose={() => {
+                setPopoverText("");
+              }}
+            ></ButtonWithPopover>
           </div>
         </div>
         <DialogContentText sx={{ pl: 1, pr: 1 }}>{description}</DialogContentText>
@@ -139,5 +151,51 @@ function Details({ uploadDate, updatedDate, user }: DetailProps) {
     >
       Uploaded: {uploadDateString} | Last Update: {updatedDateString} | User: {user}
     </p>
+  );
+}
+
+interface ButtonWithPopoverProps {
+  buttonText: string;
+  popoverText: string;
+  onClick: () => void;
+  onClose: () => void;
+}
+
+function ButtonWithPopover({ buttonText, popoverText, onClick, onClose }: ButtonWithPopoverProps) {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onClick();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    onClose();
+    setAnchorEl(null);
+  };
+
+  const open = popoverText != "";
+  const id = open ? "simple-popover" : undefined;
+
+  return (
+    <div>
+      <Button aria-describedby={id} variant="contained" color="primary" size="small" onClick={handleClick}>
+        {buttonText}
+      </Button>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Typography variant="caption" sx={{ p: 2 }}>
+          {popoverText}
+        </Typography>
+      </Popover>
+    </div>
   );
 }

@@ -1,4 +1,7 @@
+import { execFile } from "child_process";
+import { getAssetPath } from "main/util";
 import { async as AsyncStreamZip } from "node-stream-zip";
+import path from "path";
 
 export async function installISOonWindows({
   assetPath,
@@ -11,7 +14,20 @@ export async function installISOonWindows({
   isoPath: string;
   log?: (message: string) => void;
 }) {
-  log(`Patching ${isoPath} with ${assetPath} to ${destinationPath}`);
+  const destinationISOpath = path.join(destinationPath, "out.iso");
+
+  log(`Patching ${isoPath} with ${assetPath} to ${destinationISOpath}`);
+  const args = ["-d", "-f", "-s", isoPath, assetPath, destinationISOpath];
+  await new Promise<void>((resolve, reject) => {
+    execFile(getAssetPath("include", "xdelta.exe"), args, function (error) {
+      if (error) {
+        reject(error);
+      } else {
+        log("Patching complete, new ISO should be located in the folder");
+        resolve();
+      }
+    });
+  });
 }
 
 export async function installModFilesWindows({

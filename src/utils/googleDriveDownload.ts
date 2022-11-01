@@ -32,6 +32,7 @@ export async function googleDriveDownload(options: {
     let redirectUrl = url;
 
     const req = wgetRequest(options, function (res) {
+      console.log("res");
       if (res.statusCode === 303) {
         console.log("Got redirectUrl URL: " + res.headers.location);
         res.on("error", function (err) {
@@ -61,7 +62,7 @@ export async function googleDriveDownload(options: {
           onProgress && onProgress({ transferredBytes, totalBytes });
         });
       } else {
-        console.log("Server respond " + res.statusCode);
+        console.log("Server responded " + res.statusCode);
         reject();
       }
     });
