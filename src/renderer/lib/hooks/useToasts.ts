@@ -1,8 +1,8 @@
-import { useSnackbar } from "notistack";
 import React from "react";
+import type { Id, ToastOptions } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const useToasts = () => {
-  const { enqueueSnackbar } = useSnackbar();
   const toastHandlers = React.useMemo(
     () => ({
       showError: (error: Error | string | unknown) => {
@@ -15,13 +15,42 @@ export const useToasts = () => {
           message = JSON.stringify(error);
         }
         // Let's not automatically hide error messages
-        enqueueSnackbar(message, { variant: "error", persist: true });
+        toast.error(message, {
+          autoClose: false,
+          hideProgressBar: true,
+          position: "bottom-right",
+          theme: "dark",
+        });
       },
-      showSuccess: (message: string) => enqueueSnackbar(message, { variant: "success", autoHideDuration: 2500 }),
-      showWarning: (message: string) => enqueueSnackbar(message, { variant: "warning" }),
-      showInfo: (message: string) => enqueueSnackbar(message, { variant: "info" }),
+      showSuccess: (message: string) => {
+        return toast.success(message, {
+          position: "bottom-right",
+          theme: "dark",
+        });
+      },
+      showWarning: (message: string) => {
+        return toast.warning(message, {
+          position: "bottom-right",
+          theme: "dark",
+        });
+      },
+      showInfo: (message: string) =>
+        toast.info(message, {
+          position: "bottom-right",
+          theme: "dark",
+        }),
+      showCustomToast: (message: string, options?: ToastOptions) => {
+        if (options) {
+          return toast.info(message, options);
+        }
+        return toast.info(message, {
+          position: "bottom-right",
+          theme: "dark",
+        });
+      },
+      dismissToast: (id: Id) => toast.dismiss(id),
     }),
-    [enqueueSnackbar],
+    [],
   );
   return toastHandlers;
 };

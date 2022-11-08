@@ -1,4 +1,5 @@
 import "./styles/styles.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 import { ThemeProvider } from "@emotion/react";
 import { StyledEngineProvider, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
@@ -42,13 +43,16 @@ const App = () => {
   }
 
   return (
-    <Routes>
-      <Route path="/main/*" element={<MainView />} />
-      <Route path="/landing" element={<LandingView />} />
-      <Route path="/settings/*" element={<SettingsView />} />
-      <Route path="/" element={<Navigate replace to="/landing" />} />
-      <Route element={<NotFoundView />} />
-    </Routes>
+    <>
+      <ToastProvider />
+      <Routes>
+        <Route path="/main/*" element={<MainView />} />
+        <Route path="/landing" element={<LandingView />} />
+        <Route path="/settings/*" element={<SettingsView />} />
+        <Route path="/" element={<Navigate replace to="/landing" />} />
+        <Route element={<NotFoundView />} />
+      </Routes>
+    </>
   );
 };
 
@@ -59,13 +63,11 @@ const withProviders = (Component: React.ComponentType) => {
       <MuiThemeProvider theme={slippiTheme}>
         <ThemeProvider theme={slippiTheme as any}>
           <QueryClientProvider client={queryClient}>
-            <ToastProvider>
-              <ServiceProvider>
-                <Router>
-                  <Component />
-                </Router>
-              </ServiceProvider>
-            </ToastProvider>
+            <ServiceProvider>
+              <Router>
+                <Component />
+              </Router>
+            </ServiceProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </MuiThemeProvider>

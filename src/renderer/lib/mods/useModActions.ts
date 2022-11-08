@@ -1,32 +1,32 @@
 import type { ModService } from "mods/types";
-import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 
 import { useIsoPathsExtra } from "@/lib/hooks/useSettings";
 import { useToasts } from "@/lib/hooks/useToasts";
 
 export const useModActions = (modService: ModService) => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { showError, showSuccess } = useToasts();
+  const { showCustomToast, showError, showSuccess, dismissToast } = useToasts();
   const [, addIsoPathExtra] = useIsoPathsExtra();
 
   const downloadISOPatch = useCallback(
     async (url: string, isoPath: string, destinationPath: string) => {
-      enqueueSnackbar("Downloading and installing ISO patch...", {
-        persist: true,
-        key: "downloading",
+      const downloadToastId = showCustomToast("Downloading and installing ISO patch...", {
+        autoClose: false,
+        hideProgressBar: true,
+        position: "bottom-right",
+        theme: "dark",
       });
       try {
         await modService.downloadISOPatch(url, isoPath, destinationPath);
-        closeSnackbar("downloading");
+        dismissToast(downloadToastId);
         await addIsoPathExtra(destinationPath);
         showSuccess("Installation complete");
       } catch (err) {
-        closeSnackbar("downloading");
+        dismissToast(downloadToastId);
         showError("Download failed");
       }
     },
-    [enqueueSnackbar, modService, closeSnackbar, addIsoPathExtra, showSuccess, showError],
+    [showCustomToast, modService, addIsoPathExtra, showSuccess, dismissToast, showError],
   );
 
   return {
