@@ -17,6 +17,12 @@ export const ipc_setIsoPathActive = makeEndpoint.main(
   <SuccessPayload>_,
 );
 
+export const ipc_modifyIsoPathsExtra = makeEndpoint.main(
+  "modifyIsoPathsExtra",
+  <{ isoPath: string; remove?: boolean }>_,
+  <SuccessPayload>_,
+);
+
 export const ipc_setRootSlpPath = makeEndpoint.main("setRootSlpPath", <{ path: string }>_, <SuccessPayload>_);
 
 export const ipc_setUseMonthlySubfolders = makeEndpoint.main(

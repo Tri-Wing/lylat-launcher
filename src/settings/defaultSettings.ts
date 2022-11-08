@@ -16,6 +16,7 @@ export const defaultAppSettings: AppSettings = {
   settings: {
     isoPathVanilla: null,
     isoPathActive: null,
+    isoPathsExtra: null,
     rootSlpPath: getDefaultRootSlpPath(),
     useMonthlySubfolders: false,
     spectateSlpPath: path.join(getDefaultRootSlpPath(), "Spectate"),

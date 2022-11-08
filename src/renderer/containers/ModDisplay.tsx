@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Popover, Typography } from "@mui/material";
 import { DownloadType } from "mods/types";
 import moment from "moment";
+import path from "path";
 import React from "react";
 
 import { useIsoVerification } from "@/lib/hooks/useIsoVerification";
@@ -19,7 +20,7 @@ const uploadDate = new Date("August 2, 2022 05:35:32").toISOString();
 const updatedDate = new Date("September 9, 2022 01:25:01").toISOString();
 const description =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. ";
-const downloadUrl = "REPLACE WITH TESTING URL";
+const downloadUrl = "https://drive.google.com/uc?export=download&id=1_iI-gT5X5ceJwEZukkitmq_TO91Ufzjf";
 
 interface ModDisplayProps {
   open: boolean;
@@ -35,14 +36,17 @@ export const ModDisplay = React.memo((props: ModDisplayProps) => {
   const { modService } = useServices();
   const { downloadISOPatch } = useModActions(modService);
 
-  const downloadHandler = async (modCategory: string, downloadUrl: string) => {
+  const downloadHandler = async (modCategory: string, fileName: string, downloadUrl: string) => {
     if (downloadType != null) {
       setPopoverText("Please wait for current download to complete");
       return;
     }
 
     if (modCategory === "ISO Patch") {
-      if (isoValidity != IsoValidity.VALID) {
+      if (isoValidity === IsoValidity.UNVALIDATED) {
+        setPopoverText("Please wait for your SSBM 1.02 ISO to be validated. Try again in a moment.");
+        return;
+      } else if (isoValidity !== IsoValidity.VALID) {
         setPopoverText(
           "Installing ISO mods requires a valid SSBM 1.02 ISO to be selected. Click the settings icon to add an ISO.",
         );
@@ -51,7 +55,14 @@ export const ModDisplay = React.memo((props: ModDisplayProps) => {
       setDownloadType(DownloadType.ISOPATCH);
 
       if (isoPathVanilla) {
-        await downloadISOPatch(downloadUrl, isoPathVanilla);
+        const result = await window.electron.common.showOpenDialog({ properties: ["openDirectory"] });
+        if (result.canceled || result.filePaths[0].length === 0) {
+          setDownloadType(null);
+          return;
+        }
+        const destinationPath = path.join(result.filePaths[0], fileName);
+        //check if path is a valid path
+        await downloadISOPatch(downloadUrl, isoPathVanilla, destinationPath);
       }
       setDownloadType(null);
     }
@@ -83,7 +94,7 @@ export const ModDisplay = React.memo((props: ModDisplayProps) => {
               buttonText="Download"
               popoverText={popoverText}
               onClick={() => {
-                void downloadHandler(props.item.category!, downloadUrl);
+                void downloadHandler(props.item.category!, props.item.title!, downloadUrl);
               }}
               onClose={() => {
                 setPopoverText("");

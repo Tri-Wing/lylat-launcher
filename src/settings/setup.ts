@@ -8,6 +8,7 @@ import {
   ipc_addNewConnection,
   ipc_deleteConnection,
   ipc_editConnection,
+  ipc_modifyIsoPathsExtra,
   ipc_setAutoUpdateLauncher,
   ipc_setExtraSlpPaths,
   ipc_setIsoPathActive,
@@ -59,7 +60,27 @@ export default function setupSettingsIpc({
     }
     return { success: true };
   });
+  ipc_modifyIsoPathsExtra.main!.handle(async ({ isoPath, remove }) => {
+    const isoPathsExtra = settingsManager.getIsoPathsExtra();
+    if (isoPathsExtra) {
+      let newIsoPathsExtra;
+      if (remove) {
+        newIsoPathsExtra = isoPathsExtra.filter((item) => item !== isoPath);
+      } else {
+        newIsoPathsExtra = isoPathsExtra.concat(isoPath);
+      }
 
+      await settingsManager.setIsoPathsExtra(newIsoPathsExtra);
+    } else {
+      await settingsManager.setIsoPathsExtra([isoPath]);
+    }
+    const gameDir = path.dirname(isoPath);
+    const netplayInstall = dolphinManager.getInstallation(DolphinLaunchType.NETPLAY);
+    const playbackInstall = dolphinManager.getInstallation(DolphinLaunchType.PLAYBACK);
+    await Promise.all([netplayInstall.addGamePath(gameDir), playbackInstall.addGamePath(gameDir)]);
+
+    return { success: true };
+  });
   ipc_setRootSlpPath.main!.handle(async ({ path }) => {
     await settingsManager.setRootSlpPath(path);
     const installation = dolphinManager.getInstallation(DolphinLaunchType.NETPLAY);

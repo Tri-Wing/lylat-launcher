@@ -4,5 +4,5 @@ export enum DownloadType {
 }
 
 export interface ModService {
-  downloadISOPatch(downloadUrl: string, isoPath: string): Promise<void>;
+  downloadISOPatch(downloadUrl: string, isoPath: string, destinationPath: string): Promise<void>;
 }

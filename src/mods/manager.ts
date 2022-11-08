@@ -15,10 +15,10 @@ export class ModManager {
     this._onDownloadComplete();
   }
 
-  public async installISOpatch(isoPath: string) {
+  public async installISOpatch(isoPath: string, destinationPath: string) {
     const modInstall = this.getInstallation();
     const downloadDir = path.join(app.getPath("userData"), "temp");
-    await modInstall.installISO(path.join(downloadDir, "patch.xdelta"), downloadDir, isoPath);
+    await modInstall.installISO(path.join(downloadDir, "patch.xdelta"), destinationPath, isoPath);
   }
 
   private _onDownloadProgress(current: number, total: number) {

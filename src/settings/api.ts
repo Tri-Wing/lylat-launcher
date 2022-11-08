@@ -5,6 +5,7 @@ import {
   ipc_addNewConnection,
   ipc_deleteConnection,
   ipc_editConnection,
+  ipc_modifyIsoPathsExtra,
   ipc_openSettingsModalEvent,
   ipc_setAutoUpdateLauncher,
   ipc_setExtraSlpPaths,
@@ -41,6 +42,12 @@ export default {
   },
   async setIsoPathActive(isoPathActive: string | null): Promise<void> {
     await ipc_setIsoPathActive.renderer!.trigger({ isoPathActive: isoPathActive });
+  },
+  async addIsoPathExtra(isoPath: string): Promise<void> {
+    await ipc_modifyIsoPathsExtra.renderer!.trigger({ isoPath: isoPath });
+  },
+  async removeIsoPathExtra(isoPath: string): Promise<void> {
+    await ipc_modifyIsoPathsExtra.renderer!.trigger({ isoPath: isoPath, remove: true });
   },
   async setRootSlpPath(rootSlpPath: string): Promise<void> {
     await ipc_setRootSlpPath.renderer!.trigger({ path: rootSlpPath });

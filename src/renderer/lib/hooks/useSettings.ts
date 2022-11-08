@@ -34,6 +34,17 @@ export const useIsoPathActive = () => {
   return [isoPathActive, setPathActive] as const;
 };
 
+export const useIsoPathsExtra = () => {
+  const isoPathsExtra = useSettings((store) => store.settings.isoPathsExtra);
+  const addIsoPathExtra = async (isoPath: string) => {
+    await window.electron.settings.addIsoPathExtra(isoPath);
+  };
+  const removeIsoPathExtra = async (isoPath: string) => {
+    await window.electron.settings.removeIsoPathExtra(isoPath);
+  };
+  return [isoPathsExtra, addIsoPathExtra, removeIsoPathExtra] as const;
+};
+
 export const useRootSlpPath = () => {
   const rootSlpPath = useSettings((store) => store.settings.rootSlpPath);
   const setReplayDir = async (path: string) => {

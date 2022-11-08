@@ -53,12 +53,20 @@ export class SettingsManager {
     return this.get().settings.useMonthlySubfolders;
   }
 
+  public getIsoPathsExtra(): string[] | null {
+    return this.get().settings.isoPathsExtra;
+  }
+
   public async setIsoPathVanilla(isoPathVanilla: string | null): Promise<void> {
     await this._set("settings.isoPathVanilla", isoPathVanilla);
   }
 
   public async setIsoPathActive(isoPathActive: string | null): Promise<void> {
     await this._set("settings.isoPathActive", isoPathActive);
+  }
+
+  public async setIsoPathsExtra(isoPathsExtra: string[] | null): Promise<void> {
+    await this._set("settings.isoPathsExtra", isoPathsExtra);
   }
 
   public async setRootSlpPath(slpPath: string): Promise<void> {

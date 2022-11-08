@@ -11,9 +11,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import React from "react";
 
 import { PathInput } from "@/components/PathInput";
+import { PathSelect } from "@/components/PathSelect";
 import { useDolphinStore } from "@/lib/dolphin/useDolphinStore";
 import { useIsoVerification } from "@/lib/hooks/useIsoVerification";
-import { useIsoPathActive, useIsoPathVanilla, useLaunchMeleeOnPlay } from "@/lib/hooks/useSettings";
+import { useIsoPathActive, useIsoPathsExtra, useIsoPathVanilla, useLaunchMeleeOnPlay } from "@/lib/hooks/useSettings";
 
 import { SettingItem } from "./SettingItem";
 
@@ -37,6 +38,7 @@ export const MeleeOptions: React.FC = () => {
   const isoValidity = useIsoVerification((state) => state.validity);
   const [isoPathVanilla, setIsoPathVanilla] = useIsoPathVanilla();
   const [isoPathActive, setIsoPathActive] = useIsoPathActive();
+  const [isoPathsExtra, addIsoPathExtra, removeIsoPathExtra] = useIsoPathsExtra();
   const [launchMeleeOnPlay, setLaunchMelee] = useLaunchMeleeOnPlay();
   const netplayDolphinOpen = useDolphinStore((store) => store.netplayOpened);
   const playbackDolphinOpen = useDolphinStore((store) => store.playbackOpened);
@@ -56,7 +58,7 @@ export const MeleeOptions: React.FC = () => {
           placeholder="No file set"
           disabled={verifying || netplayDolphinOpen || playbackDolphinOpen}
           options={{
-            filters: [{ name: "Melee ISO", extensions: ["iso", "gcm", "gcz"] }],
+            filters: [{ name: "Melee ISO", extensions: ["iso"] }],
           }}
           endAdornment={
             <ValidationContainer className={verifying ? undefined : isoValidity.toLowerCase()}>
@@ -75,12 +77,24 @@ export const MeleeOptions: React.FC = () => {
         />
       </SettingItem>
       <SettingItem name="Active ISO File" description="The path to the Melee ISO you want to play.">
-        <PathInput
-          tooltipText={netplayDolphinOpen || playbackDolphinOpen ? "Close Dolphin to change this setting" : ""}
+        <PathSelect
           value={isoPathActive !== null ? isoPathActive : ""}
-          onSelect={setIsoPathActive}
-          placeholder="No file set"
-          disabled={netplayDolphinOpen || playbackDolphinOpen}
+          onAdd={async (selected) => {
+            await addIsoPathExtra(selected);
+            await setIsoPathActive(selected);
+          }}
+          onRemove={async (item) => {
+            await removeIsoPathExtra(item);
+            if (item === isoPathActive) {
+              await setIsoPathActive(null);
+            }
+          }}
+          onSelect={async (item) => {
+            if (item !== isoPathActive) {
+              await setIsoPathActive(item);
+            }
+          }}
+          items={isoPathsExtra}
           options={{
             filters: [{ name: "Melee ISO", extensions: ["iso", "gcm", "gcz"] }],
           }}

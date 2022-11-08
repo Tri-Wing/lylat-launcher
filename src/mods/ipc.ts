@@ -5,6 +5,6 @@ import { _, makeEndpoint } from "utils/ipc";
 
 export const ipc_downloadISOPatch = makeEndpoint.main(
   "downloadISOPatch",
-  <{ downloadUrl: string; isoPath: string }>_,
+  <{ downloadUrl: string; isoPath: string; destinationPath: string }>_,
   <SuccessPayload>_,
 );

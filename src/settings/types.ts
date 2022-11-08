@@ -20,6 +20,7 @@ export type AppSettings = {
   settings: {
     isoPathVanilla: string | null;
     isoPathActive: string | null;
+    isoPathsExtra: string[] | null;
     rootSlpPath: string;
     useMonthlySubfolders: boolean;
     spectateSlpPath: string;
