@@ -44,12 +44,11 @@ export const PathSelect = React.forwardRef<HTMLInputElement, PathSelectProps>((p
   const onRemoveItem = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: string) => {
     event.stopPropagation();
     if (items !== null && items.includes(item)) {
-      if (selected === item) {
-        setSelected("");
-      }
       if (items.length <= 2) {
         setOpen(false);
       }
+      const newMenuItems = items.filter((menuItem) => menuItem !== item);
+      setMenuItems(newMenuItems);
       await onRemove(item);
     }
   };
