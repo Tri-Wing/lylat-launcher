@@ -1,35 +1,37 @@
 import type { ModService } from "mods/types";
-import { useCallback } from "react";
 
 import { useIsoPathsExtra } from "@/lib/hooks/useSettings";
-import { useToasts } from "@/lib/hooks/useToasts";
 
 export const useModActions = (modService: ModService) => {
-  const { showCustomToast, showError, showSuccess, dismissToast } = useToasts();
   const [, addIsoPathExtra] = useIsoPathsExtra();
 
-  const downloadISOPatch = useCallback(
-    async (url: string, isoPath: string, destinationPath: string) => {
-      const downloadToastId = showCustomToast("Downloading and installing ISO patch...", {
-        autoClose: false,
-        hideProgressBar: true,
-        position: "bottom-right",
-        theme: "dark",
-      });
-      try {
-        await modService.downloadISOPatch(url, isoPath, destinationPath);
-        dismissToast(downloadToastId);
-        await addIsoPathExtra(destinationPath);
-        showSuccess("Installation complete");
-      } catch (err) {
-        dismissToast(downloadToastId);
-        showError("Download failed");
+  const downloadISOPatch = async (url: string, fileName: string) => {
+    try {
+      await modService.downloadISOPatch(url, fileName);
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
       }
-    },
-    [showCustomToast, modService, addIsoPathExtra, showSuccess, dismissToast, showError],
-  );
+      return false;
+    }
+  };
+
+  const installISOPatch = async (isoPath: string, destinationPath: string, fileName: string) => {
+    try {
+      await modService.installISOPatch(isoPath, destinationPath, fileName);
+      await addIsoPathExtra(destinationPath);
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      return false;
+    }
+  };
 
   return {
     downloadISOPatch,
+    installISOPatch,
   };
 };

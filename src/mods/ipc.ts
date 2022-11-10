@@ -5,6 +5,12 @@ import { _, makeEndpoint } from "utils/ipc";
 
 export const ipc_downloadISOPatch = makeEndpoint.main(
   "downloadISOPatch",
-  <{ downloadUrl: string; isoPath: string; destinationPath: string }>_,
+  <{ downloadUrl: string; fileName: string }>_,
+  <SuccessPayload>_,
+);
+
+export const ipc_installISOPatch = makeEndpoint.main(
+  "installISOPatch",
+  <{ isoPath: string; destinationPath: string; fileName: string }>_,
   <SuccessPayload>_,
 );

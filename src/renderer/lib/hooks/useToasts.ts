@@ -1,5 +1,5 @@
 import React from "react";
-import type { Id, ToastOptions } from "react-toastify";
+import type { Id, ToastOptions, UpdateOptions } from "react-toastify";
 import { toast } from "react-toastify";
 
 export const useToasts = () => {
@@ -49,6 +49,7 @@ export const useToasts = () => {
         });
       },
       dismissToast: (id: Id) => toast.dismiss(id),
+      updateToast: (id: Id, options: UpdateOptions) => toast.update(id, options),
     }),
     [],
   );

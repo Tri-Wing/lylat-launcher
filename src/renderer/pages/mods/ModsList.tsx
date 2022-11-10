@@ -2,13 +2,11 @@ import { colors } from "@common/colors";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Card } from "@mui/material";
-import React from "react";
+import { fetchFeaturedModPosts, fetchModPostDetails } from "mods/install/fetchModPosts";
+import { Game } from "mods/types";
+import React, { useEffect } from "react";
 
-import fodBanner from "@/styles/images/stages/2.png";
-import stadiumBanner from "@/styles/images/stages/3.png";
-import muteCityBanner from "@/styles/images/stages/10.png";
-import dreamlandBanner from "@/styles/images/stages/28.png";
-
+import type { ModPost } from "../../containers/ModDisplay";
 import { ModDisplay } from "../../containers/ModDisplay";
 
 export interface ModsListItem {
@@ -18,40 +16,6 @@ export interface ModsListItem {
   category?: string;
   subtitle?: string;
 }
-
-const akaneiaDesc =
-  "The Akaneia Build is a ground-breaking Melee mod that adds new viable and authentic content to the game such as costumes, stages, and more.";
-
-const modsListItems: ModsListItem[] = [
-  {
-    title: "Akaneia Build",
-    image: stadiumBanner,
-    author: "Team Akaneia",
-    category: "ISO Patch",
-    subtitle: akaneiaDesc,
-  },
-  {
-    title: "Midnight Melee",
-    image: fodBanner,
-    author: "Team Midnight",
-    category: "ISO Patch",
-    subtitle: akaneiaDesc,
-  },
-  {
-    title: "Animelee",
-    image: muteCityBanner,
-    author: "Animelee Team",
-    category: "ISO Patch",
-    subtitle: akaneiaDesc,
-  },
-  {
-    title: "Custom Melee",
-    image: dreamlandBanner,
-    author: "Mod Author",
-    category: "ISO Patch",
-    subtitle: akaneiaDesc,
-  },
-];
 
 const Main = styled.div`
   display: flex;
@@ -65,33 +29,54 @@ const cardStyle = {
   cursor: `pointer`,
 };
 
+let featuredModPostsCache: any[];
+const openedModPostsCache: any[] = [];
+
 export const ModsList = React.memo(function ModsList() {
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [modalContent, setModalContent] = React.useState<ModsListItem>({});
-  const openModal = (item: ModsListItem) => {
-    setModalContent(item);
+  const [modalContent, setModalContent] = React.useState<ModPost | null>(null);
+  const [featuredModPosts, setFeaturedModPosts] = React.useState<any[] | null>(null);
+  const openModal = async (item: any) => {
+    if (openedModPostsCache.length === 0 || !openedModPostsCache.find((post) => post.id === item.id)) {
+      const modPost = await fetchModPostDetails(item.id);
+      openedModPostsCache.push(modPost);
+    }
+    setModalContent({ ...item, ...openedModPostsCache.find((post) => post.id === item.id) });
     setModalOpen(true);
   };
   const onCancel = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    void (async function () {
+      try {
+        if (!featuredModPostsCache) {
+          featuredModPostsCache = await fetchFeaturedModPosts(Game.MELEE);
+        }
+        setFeaturedModPosts(featuredModPostsCache);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
   return (
     <Main>
-      <ModDisplay open={modalOpen} item={modalContent} onCancel={onCancel} />
-      {modsListItems.map((item) => {
+      <ModDisplay open={modalOpen} post={modalContent} onCancel={onCancel} />
+      {(featuredModPosts ?? []).map((item) => {
         return (
           <Card
             style={cardStyle}
             sx={{ m: 1 }}
             key={item.title}
             onClick={() => {
-              openModal(item);
+              void openModal(item);
             }}
           >
-            <PreviewImage imageSrc={item.image ?? ""}></PreviewImage>
+            <PreviewImage imageSrc={item.thumbnail_url ?? ""}></PreviewImage>
             <Title>{item.title}</Title>
             <Category>{item.category}</Category>
-            <Subtitle content={item.subtitle ?? ""} />
           </Card>
         );
       })}
@@ -145,24 +130,5 @@ const Category: React.FC = ({ children }) => {
     >
       <h3>{children}</h3>
     </div>
-  );
-};
-
-const Subtitle: React.FC<{
-  content: string;
-}> = ({ content }) => {
-  const fontSize = content.length > 80 ? "12px" : "14px";
-  return (
-    <p
-      css={css`
-        font-size: ${fontSize};
-        padding: 0px 5px;
-        margin: 0px;
-        height: 100px;
-        overflow: hidden;
-      `}
-    >
-      {content}
-    </p>
   );
 };

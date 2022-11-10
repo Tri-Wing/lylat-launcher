@@ -2,29 +2,38 @@ import { colors } from "@common/colors";
 import { IsoValidity } from "@common/types";
 import { css } from "@emotion/react";
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Popover, Typography } from "@mui/material";
-import { DownloadType } from "mods/types";
+import { DownloadType, ModCategory } from "mods/types";
 import moment from "moment";
 import path from "path";
 import React from "react";
 
 import { useIsoVerification } from "@/lib/hooks/useIsoVerification";
 import { useIsoPathVanilla } from "@/lib/hooks/useSettings";
+import { useToasts } from "@/lib/hooks/useToasts";
 import { useModActions } from "@/lib/mods/useModActions";
 import { monthDayFormat } from "@/lib/time";
 import { useServices } from "@/services";
 
-import type { ModsListItem } from "../pages/mods/ModsList";
-
-//add these to ModPost type later and get from gql server
-const uploadDate = new Date("August 2, 2022 05:35:32").toISOString();
-const updatedDate = new Date("September 9, 2022 01:25:01").toISOString();
-const description =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. ";
-const downloadUrl = "https://drive.google.com/uc?export=download&id=1_iI-gT5X5ceJwEZukkitmq_TO91Ufzjf";
+export interface ModPost {
+  id: number;
+  title: string;
+  thumbnail_url: string;
+  category: string;
+  description: string;
+  author: string;
+  filename: string;
+  download_url: string;
+  alternate_url: string;
+  image_urls: string[];
+  upload_date: string;
+  update_date: string;
+  downloads: number;
+  likes: number;
+}
 
 interface ModDisplayProps {
   open: boolean;
-  item: ModsListItem;
+  post: ModPost | null;
   onCancel: () => void;
 }
 
@@ -34,7 +43,8 @@ export const ModDisplay = React.memo((props: ModDisplayProps) => {
   const [isoPathVanilla] = useIsoPathVanilla();
   const isoValidity = useIsoVerification((state) => state.validity);
   const { modService } = useServices();
-  const { downloadISOPatch } = useModActions(modService);
+  const { downloadISOPatch, installISOPatch } = useModActions(modService);
+  const { showCustomToast, updateToast, showError, showSuccess, dismissToast } = useToasts();
 
   const downloadHandler = async (modCategory: string, fileName: string, downloadUrl: string) => {
     if (downloadType != null) {
@@ -42,7 +52,9 @@ export const ModDisplay = React.memo((props: ModDisplayProps) => {
       return;
     }
 
-    if (modCategory === "ISO Patch") {
+    console.log(modCategory);
+
+    if (modCategory === ModCategory.ISOPATCH) {
       if (isoValidity === IsoValidity.UNVALIDATED) {
         setPopoverText("Please wait for your SSBM 1.02 ISO to be validated. Try again in a moment.");
         return;
@@ -60,52 +72,85 @@ export const ModDisplay = React.memo((props: ModDisplayProps) => {
           setDownloadType(null);
           return;
         }
-        const destinationPath = path.join(result.filePaths[0], fileName);
-        //check if path is a valid path
-        await downloadISOPatch(downloadUrl, isoPathVanilla, destinationPath);
+        const destinationPath = path.join(result.filePaths[0], fileName + ".iso");
+        const patchFileName = new Date().valueOf().toString() + ".xdelta";
+
+        const toastId = showCustomToast(`Downloading ${fileName}...`, {
+          autoClose: false,
+          hideProgressBar: true,
+          position: "bottom-right",
+          theme: "dark",
+        });
+        try {
+          const downloadSuccess = await downloadISOPatch(downloadUrl, patchFileName);
+          if (downloadSuccess) {
+            setDownloadType(null);
+            updateToast(toastId, {
+              render: `Installing ${fileName}...`,
+            });
+            const installSuccess = await installISOPatch(isoPathVanilla, destinationPath, patchFileName);
+            if (installSuccess) {
+              dismissToast(toastId);
+              showSuccess(`${fileName} successfully installed.`);
+            }
+          }
+        } catch (error) {
+          dismissToast(toastId);
+          showError(error);
+        }
+        setDownloadType(null);
       }
-      setDownloadType(null);
     }
   };
 
-  return (
-    <Dialog open={props.open} onClose={props.onCancel} fullWidth={true} closeAfterTransition={true}>
-      <DialogContent sx={{ p: 0 }}>
-        <DialogTitle sx={{ pt: 0, pb: 0 }}>{props.item.title}</DialogTitle>
-        <Category category={props.item.category!} />
-        <BannerImage imageSrc={props.item.image!} />
-        <div
-          css={css`
-            width: 100%;
-            height: 50px;
-            display: flex;
-          `}
-        >
-          <Details uploadDate={uploadDate} updatedDate={updatedDate} user={props.item.author!}></Details>
+  const modPost = props.post;
+
+  if (modPost != null) {
+    return (
+      <Dialog open={props.open} onClose={props.onCancel} fullWidth={true} closeAfterTransition={true}>
+        <DialogContent sx={{ p: 0 }}>
+          <DialogTitle sx={{ pt: 0, pb: 0 }}>{modPost.title}</DialogTitle>
+          <Category category={modPost.category!} />
+          <BannerImage imageSrc={modPost.image_urls[0]!} />
           <div
             css={css`
-              flex: 1;
+              width: 100%;
+              height: 50px;
               display: flex;
-              justify-content: center;
-              align-items: center;
             `}
           >
-            <ButtonWithPopover
-              buttonText="Download"
-              popoverText={popoverText}
-              onClick={() => {
-                void downloadHandler(props.item.category!, props.item.title!, downloadUrl);
-              }}
-              onClose={() => {
-                setPopoverText("");
-              }}
-            ></ButtonWithPopover>
+            <Details
+              uploadDate={modPost.upload_date}
+              updatedDate={modPost.update_date}
+              user={modPost.author!}
+            ></Details>
+            <div
+              css={css`
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              `}
+            >
+              <ButtonWithPopover
+                buttonText="Download"
+                popoverText={popoverText}
+                onClick={() => {
+                  void downloadHandler(modPost.category, modPost.filename, modPost.download_url);
+                }}
+                onClose={() => {
+                  setPopoverText("");
+                }}
+              ></ButtonWithPopover>
+            </div>
           </div>
-        </div>
-        <DialogContentText sx={{ pl: 1, pr: 1 }}>{description}</DialogContentText>
-      </DialogContent>
-    </Dialog>
-  );
+          <DialogContentText sx={{ pl: 1, pr: 1 }}>{modPost.description}</DialogContentText>
+        </DialogContent>
+      </Dialog>
+    );
+  } else {
+    return <></>;
+  }
 });
 
 const BannerImage = ({ imageSrc }: { imageSrc: string }) => {

@@ -5,19 +5,30 @@ import { appVersion } from "@common/constants";
 import { fetch } from "cross-fetch";
 import electronLog from "electron-log";
 import type { GraphQLError } from "graphql";
+import type { Game } from "mods/types";
 
-import type { DolphinLaunchType } from "../types";
-
-export type DolphinVersionResponse = {
-  version: string;
-  downloadUrls: {
-    darwin: string;
-    linux: string;
-    win32: string;
-  };
+type ModPostResponse = {
+  id: number;
+  title: string;
+  thumbnail_url: string;
+  category: string;
 };
 
-const log = electronLog.scope("dolphin/checkVersion");
+type ModPostDetailsResponse = {
+  id: number;
+  description: string;
+  author: string;
+  filename: string;
+  download_url: string;
+  alternate_url: string;
+  image_urls: string[];
+  upload_date: string;
+  update_date: string;
+  downloads: number;
+  likes: number;
+};
+
+const log = electronLog.scope("mods/fetchModPosts");
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 const httpLink = new HttpLink({ uri: process.env.LYLAT_GRAPHQL_ENDPOINT, fetch });
@@ -53,12 +64,30 @@ const client = new ApolloClient({
 });
 
 const getFeaturedModsQuery = gql`
-  query GetFeaturedMods($purpose: DolphinPurpose, $includeBeta: Boolean) {
-    getFeaturedMods(purpose: $purpose, includeBeta: $includeBeta) {
-      linuxDownloadUrl
-      windowsDownloadUrl
-      macDownloadUrl
-      version
+  query GetFeaturedMods($game: Game) {
+    getFeaturedMods(game: $game) {
+      id
+      title
+      thumbnail_url
+      category
+    }
+  }
+`;
+
+const getModPostDetailsQuery = gql`
+  query GetModPost($id: Int) {
+    getModPost(id: $id) {
+      id
+      description
+      author
+      filename
+      download_url
+      alternate_url
+      image_urls
+      upload_date
+      update_date
+      downloads
+      likes
     }
   }
 `;
@@ -73,24 +102,28 @@ const handleErrors = (errors: readonly GraphQLError[] | undefined) => {
   }
 };
 
-export async function fetchFeaturedMods(dolphinType: DolphinLaunchType, beta = false): Promise<DolphinVersionResponse> {
+export async function fetchFeaturedModPosts(game: Game): Promise<ModPostResponse[]> {
   const res = await client.query({
     query: getFeaturedModsQuery,
     fetchPolicy: "network-only",
     variables: {
-      purpose: dolphinType.toUpperCase(),
-      includeBeta: beta,
+      game: game.toUpperCase(),
     },
   });
 
   handleErrors(res.errors);
+  return res.data.getFeaturedMods;
+}
 
-  return {
-    version: res.data.getLatestDolphin.version,
-    downloadUrls: {
-      darwin: res.data.getLatestDolphin.macDownloadUrl,
-      linux: res.data.getLatestDolphin.linuxDownloadUrl,
-      win32: res.data.getLatestDolphin.windowsDownloadUrl,
+export async function fetchModPostDetails(id: number): Promise<ModPostDetailsResponse> {
+  const res = await client.query({
+    query: getModPostDetailsQuery,
+    fetchPolicy: "network-only",
+    variables: {
+      id: id,
     },
-  };
+  });
+
+  handleErrors(res.errors);
+  return res.data.getModPost;
 }
